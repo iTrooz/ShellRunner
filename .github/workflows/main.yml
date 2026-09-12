@@ -2,7 +2,7 @@
 # https://gist.github.com/iTrooz/4dd70aea9debf80a59f3491601b40a26
 # feel free to use !
 
-name: TMate
+name: SSH shell
 
 permissions:
   id-token: write
@@ -25,7 +25,7 @@ on:
         required: false
         type: string
       command:
-        description: 'command to run instead of tmate'
+        description: 'command to run instead of an SSH shell'
         required: false
         type: string
 
@@ -42,9 +42,9 @@ jobs:
         if : ${{ inputs.command }}
         run: ${{ inputs.command }}
 
-      - uses: mxschmitt/action-tmate@master
+      - uses: owenthereal/action-upterm@v1
         if : ${{ ! inputs.command }}
-        name: Setup tmate session
+        name: Setup upterm
 
   runner-with-container:
     name: Runner with container
@@ -61,8 +61,6 @@ jobs:
         if : ${{ inputs.command }}
         run: ${{ inputs.command }}
 
-      - uses: mxschmitt/action-tmate@master
+      - name: Setup upterm 
         if : ${{ ! inputs.command }}
-        name: Setup tmate session
-        with:
-          sudo: false
+        uses: owenthereal/action-upterm@v1
